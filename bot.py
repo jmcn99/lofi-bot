@@ -3,7 +3,10 @@ from discord.ext.commands import Bot
 
 import platform
 import os
+import sys
 from dotenv import load_dotenv
+
+import yaml
 
 intents = discord.Intents.default()
 
@@ -11,6 +14,15 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
 bot = Bot(command_prefix=".", intents = intents)
+
+#loading playlists
+if not os.path.isfile("playlists.yaml"):
+    sys.exit("'playlists.yaml' not found! Please add it and try again.")
+else:
+    with open("playlists.yaml") as file:
+        playlists = yaml.load(file, Loader=yaml.FullLoader)
+
+
 
 @bot.event
 async def on_ready():
